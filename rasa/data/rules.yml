@@ -1,0 +1,31 @@
+version: "3.1"
+
+rules:
+
+- rule: Say goodbye anytime the user says goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- rule: Say 'I am a bot' anytime the user challenges
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot
+
+- rule: Cancel a ticket
+  steps:
+    - intent: cancel_ticket
+    - action: action_cancel_ticket
+    - action: utter_cancel_success
+
+- rule: Reschedule a ticket
+  steps:
+    - intent: reschedule_ticket
+    - action: action_reschedule_ticket
+    - action: utter_reschedule_success
+
+- rule: Book a ticket
+  steps:
+    - intent: book_ticket
+    - action: action_book_ticket
+    - action: utter_book_success

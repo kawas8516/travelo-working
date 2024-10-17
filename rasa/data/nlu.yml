@@ -1,0 +1,124 @@
+version: "3.1"
+
+nlu:
+  - intent: greet
+    examples: |
+      - hey
+      - hello
+      - hi
+
+  - intent: goodbye
+    examples: |
+      - bye
+      - goodbye
+
+  - intent: affirm
+    examples: |
+      - yes
+      - indeed
+      - certainly
+
+  - intent: deny
+    examples: |
+      - no
+      - never
+      - not at all
+
+  - intent: mood_great
+    examples: |
+      - I am feeling great
+      - I feel awesome
+      - I am doing well
+
+  - intent: mood_unhappy
+    examples: |
+      - I am sad
+      - I am feeling down
+      - I am unhappy
+
+  - intent: bot_challenge
+    examples: |
+      - Are you a bot?
+      - What are you?
+      - Can you tell me about yourself?
+
+  - intent: book_ticket
+    examples: |
+      - I want to book a ticket
+      - Can you help me book a ticket?
+      - I need to book a ticket
+      - Help me book a ticket for the museum
+      - Can I book a ticket?
+      - I need a ticket
+
+  - intent: cancel_ticket
+    examples: |
+      - I want to cancel my ticket
+      - Can you cancel my ticket?
+      - I need to cancel my reservation
+
+  - intent: reschedule_ticket
+    examples: |
+      - I want to reschedule my ticket
+      - Can you help me change my booking?
+      - I need to change my visit date
+
+responses:
+  utter_greet:
+    - text: "Hey! How are you?"
+
+  utter_cheer_up:
+    - text: "Here is something to cheer you up:"
+      image: "https://i.imgur.com/nGF1K8f.jpg"
+
+  utter_did_that_help:
+    - text: "Did that help you?"
+
+  utter_happy:
+    - text: "Great, carry on!"
+
+  utter_goodbye:
+    - text: "Bye"
+
+  utter_iamabot:
+    - text: "I am a bot, powered by Rasa."
+
+  utter_cancel_success:
+    - text: "Your ticket has been canceled."
+
+  utter_reschedule_success:
+    - text: "Your ticket has been rescheduled."
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+
+slots:
+  museum:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: museum_name
+  date:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: visit_date
+  ticket_id:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: ticket_id
+
+entities:
+  - museum_name
+  - visit_date
+  - ticket_id
+  - museum_name
+  - num_people
+
+
+actions:
+  - action_cancel_ticket
+  - action_reschedule_ticket
+  - action_book_ticket

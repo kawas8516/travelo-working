@@ -1,0 +1,28 @@
+<!-- templates/bookings/book_ticket.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Ticket</title>
+</head>
+<body>
+    <h1>Book Your Ticket</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="user_id">User ID:</label>
+        <input type="text" id="user_id" name="user_id" required><br>
+        <label for="museum_id">Museum ID:</label>
+        <input type="text" id="museum_id" name="museum_id" required><br>
+        <label for="visit_date">Visit Date:</label>
+        <input type="date" id="visit_date" name="visit_date" required><br>
+        <label for="ticket_type">Ticket Type:</label>
+        <input type="text" id="ticket_type" name="ticket_type" required><br>
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" step="0.01" required><br>
+        <label for="number_of_tickets">Number of Tickets:</label>
+        <input type="number" id="number_of_tickets" name="number_of_tickets" required><br>
+        <input type="submit" value="Book Ticket">
+    </form>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <link rel="stylesheet" href="C:\Users\kaust\Envs\travelo\bookings\static\layout.css">
+    <title>Travelo ChatBot</title>
+</head>
+<body>
+    <div class="container my-5">
+        <div class="card">
+            <div class="card-header text-center bg-primary text-white">
+                <h4>Travelo ChatBot</h4>
+            </div>
+            <div class="card-body" id="chatbox" style="height: 400px; overflow-y: scroll;">
+                <!-- Chat messages will appear here -->
+            </div>
+            <div class="card-footer">
+                <div class="input-group">
+                    <input type="text" id="userMessage" class="form-control" placeholder="Type your message" required>
+                    <div class="input-group-append">
+                        <button id="sendBtn" class="btn btn-primary">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('sendBtn').addEventListener('click', function() {
+            const userMessage = document.getElementById('userMessage').value.trim();
+            if (userMessage) {
+                // Add user message to the chatbox
+                const chatbox = document.getElementById('chatbox');
+                const userHtml = `<div class="person-b right"><div class="message bg-primary text-white p-2 my-2">${userMessage}</div></div>`;
+                chatbox.innerHTML += userHtml;
+                // Clear the input field
+                document.getElementById('userMessage').value = '';
+
+                // Send the message to the backend
+                fetch('http://localhost:5005/webhooks/rest/webhook', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ message: userMessage, sender: "user" })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(responseObj => {
+                        if (responseObj.text) {
+                            // Add bot's response to the chatbox
+                            const botHtml = `<div class="person-a"><div class="message bg-light text-dark p-2 my-2">${responseObj.text}</div></div>`;
+                            chatbox.innerHTML += botHtml;
+                            chatbox.scrollTop = chatbox.scrollHeight;
+                        }
+                    });
+                })
+                .catch(error => console.error("Error with the bot response:", error));
+            }
+        });
+
+        // Function to get CSRF token from cookies
+        function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    </script>
+</body>
+</html>

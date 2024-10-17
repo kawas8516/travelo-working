@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px; /* Max width for mobile responsiveness */
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: #007bff;
+    color: white;
+}
+
+.card-body {
+    border: 1px solid #efefef;
+    padding: 15px;
+    min-height: 400px; /* Set height for chat area */
+    max-height: 400px; /* Set height for chat area */
+    overflow-y: auto; /* Scroll when overflow */
+}
+
+.card-body .message {
+    border-radius: 15px;
+    padding: 10px 15px;
+    margin: 5px 0;
+    max-width: 80%; /* Limit message width */
+}
+
+.person-a .message {
+    background: #f8f8f8;
+    margin-left: auto; /* Align to right for user */
+    color: #333;
+}
+
+.person-b .message {
+    background: lightblue;
+    margin-right: auto; /* Align to left for bot */
+    color: white;
+}
+
+.input-group {
+    width: 100%;
+}
+
+.input-group input {
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s ease;
+}
+
+.input-group input:focus {
+    border-color: #007bff; /* Focus effect */
+}
+
+.input-group button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-left: 5px; /* Space between input and button */
+}
+
+.input-group button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .card {
+        width: 100%; /* Full width on small screens */
+    }
+
+    .card-body {
+        min-height: 300px; /* Reduce height on smaller screens */
+    }
+}

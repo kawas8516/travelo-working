@@ -1,0 +1,169 @@
+# Virtual environment directory
+pip/
+
+# Python compiled files
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.env
+
+# Django specific files
+db.sqlite3
+*.log
+
+# Static and media files
+/static/
+media/
+
+# Ignore collected static files
+/staticfiles/
+
+# Ignore environment settings (if any)
+.env
+
+# VSCode settings (optional)
+.vscode/
+
+# macOS files
+.DS_Store
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# Ignore migrations files (optional, unless you want them)
+**/migrations/*.py
+!**/migrations/__init__.py
+
+# Ignore node_modules (if using frontend JS frameworks)
+node_modules/
+
+# Rasa cache files
+__pycache__/
+*.py[cod]
+*.pyo
+.cache/
+.history/
+.model/
+
+# Ignore training data and models
+models/
+*.tar.gz
+
+# Ignore domain-related cache files
+events.db
+rasa.db
+
+# Rasa logs and temporary files
+*.log
+logs/
+rasa_logs/
+tmp/
+
+# Ignore generated JSON files
+*.json
+!important_config.json  # Don't ignore this specific file
+
+
+rasa/.rasa/cache/cache.db
+rasa/.rasa/cache/tmp2md61s_s/checkpoint
+rasa/.rasa/cache/tmp2md61s_s/DIETClassifier.data_example.pkl
+rasa/.rasa/cache/tmp2md61s_s/DIETClassifier.label_data.pkl
+rasa/.rasa/cache/tmp2md61s_s/DIETClassifier.sparse_feature_sizes.pkl
+rasa/.rasa/cache/tmp2md61s_s/DIETClassifier.tf_model.data-00000-of-00001
+rasa/.rasa/cache/tmp2md61s_s/DIETClassifier.tf_model.index
+rasa/.rasa/cache/tmp45rss848/patterns.pkl
+rasa/.rasa/cache/tmp4mersmm_/vocabularies.pkl
+rasa/.rasa/cache/tmp5sy17g4p/checkpoint
+rasa/.rasa/cache/tmp5sy17g4p/unexpected_intent_policy.data_example.pkl
+rasa/.rasa/cache/tmp5sy17g4p/unexpected_intent_policy.fake_features.pkl
+rasa/.rasa/cache/tmp5sy17g4p/unexpected_intent_policy.label_data.pkl
+rasa/.rasa/cache/tmp5sy17g4p/unexpected_intent_policy.label_quantiles.pkl
+rasa/.rasa/cache/tmp5sy17g4p/unexpected_intent_policy.meta.pkl
+rasa/.rasa/cache/tmp5sy17g4p/unexpected_intent_policy.priority.pkl
+rasa/.rasa/cache/tmp5sy17g4p/unexpected_intent_policy.tf_model.data-00000-of-00001
+rasa/.rasa/cache/tmp5sy17g4p/unexpected_intent_policy.tf_model.index
+rasa/.rasa/cache/tmp5wtoq2ku/vocabularies.pkl
+rasa/.rasa/cache/tmp72gb0i6j/vocabularies.pkl
+rasa/.rasa/cache/tmp75k3e5c1/feature_to_idx_dict.pkl
+rasa/.rasa/cache/tmp8jf7ngj0/patterns.pkl
+rasa/.rasa/cache/tmp8l4_0ubz/checkpoint
+rasa/.rasa/cache/tmp8l4_0ubz/DIETClassifier.data_example.pkl
+rasa/.rasa/cache/tmp8l4_0ubz/DIETClassifier.label_data.pkl
+rasa/.rasa/cache/tmp8l4_0ubz/DIETClassifier.sparse_feature_sizes.pkl
+rasa/.rasa/cache/tmp8l4_0ubz/DIETClassifier.tf_model.data-00000-of-00001
+rasa/.rasa/cache/tmp8l4_0ubz/DIETClassifier.tf_model.index
+rasa/.rasa/cache/tmp8y1qndg4/patterns.pkl
+rasa/.rasa/cache/tmp9c5fzwrp/checkpoint
+rasa/.rasa/cache/tmp9c5fzwrp/unexpected_intent_policy.data_example.pkl
+rasa/.rasa/cache/tmp9c5fzwrp/unexpected_intent_policy.fake_features.pkl
+rasa/.rasa/cache/tmp9c5fzwrp/unexpected_intent_policy.label_data.pkl
+rasa/.rasa/cache/tmp9c5fzwrp/unexpected_intent_policy.label_quantiles.pkl
+rasa/.rasa/cache/tmp9c5fzwrp/unexpected_intent_policy.meta.pkl
+rasa/.rasa/cache/tmp9c5fzwrp/unexpected_intent_policy.priority.pkl
+rasa/.rasa/cache/tmp9c5fzwrp/unexpected_intent_policy.tf_model.data-00000-of-00001
+rasa/.rasa/cache/tmp9c5fzwrp/unexpected_intent_policy.tf_model.index
+rasa/.rasa/cache/tmpbplgpm5z/vocabularies.pkl
+rasa/.rasa/cache/tmpcoh6dh9_/checkpoint
+rasa/.rasa/cache/tmpcoh6dh9_/ted_policy.data_example.pkl
+rasa/.rasa/cache/tmpcoh6dh9_/ted_policy.fake_features.pkl
+rasa/.rasa/cache/tmpcoh6dh9_/ted_policy.label_data.pkl
+rasa/.rasa/cache/tmpcoh6dh9_/ted_policy.meta.pkl
+rasa/.rasa/cache/tmpcoh6dh9_/ted_policy.priority.pkl
+rasa/.rasa/cache/tmpcoh6dh9_/ted_policy.tf_model.data-00000-of-00001
+rasa/.rasa/cache/tmpcoh6dh9_/ted_policy.tf_model.index
+rasa/.rasa/cache/tmpdw9gntzh/checkpoint
+rasa/.rasa/cache/tmpdw9gntzh/ted_policy.data_example.pkl
+rasa/.rasa/cache/tmpdw9gntzh/ted_policy.fake_features.pkl
+rasa/.rasa/cache/tmpdw9gntzh/ted_policy.label_data.pkl
+rasa/.rasa/cache/tmpdw9gntzh/ted_policy.meta.pkl
+rasa/.rasa/cache/tmpdw9gntzh/ted_policy.priority.pkl
+rasa/.rasa/cache/tmpdw9gntzh/ted_policy.tf_model.data-00000-of-00001
+rasa/.rasa/cache/tmpdw9gntzh/ted_policy.tf_model.index
+rasa/.rasa/cache/tmpf_ohqw2p/checkpoint
+rasa/.rasa/cache/tmpf_ohqw2p/ted_policy.data_example.pkl
+rasa/.rasa/cache/tmpf_ohqw2p/ted_policy.fake_features.pkl
+rasa/.rasa/cache/tmpf_ohqw2p/ted_policy.label_data.pkl
+rasa/.rasa/cache/tmpf_ohqw2p/ted_policy.meta.pkl
+rasa/.rasa/cache/tmpf_ohqw2p/ted_policy.priority.pkl
+rasa/.rasa/cache/tmpf_ohqw2p/ted_policy.tf_model.data-00000-of-00001
+rasa/.rasa/cache/tmpf_ohqw2p/ted_policy.tf_model.index
+rasa/.rasa/cache/tmpg1a1wx16/checkpoint
+rasa/.rasa/cache/tmpg1a1wx16/unexpected_intent_policy.data_example.pkl
+rasa/.rasa/cache/tmpg1a1wx16/unexpected_intent_policy.fake_features.pkl
+rasa/.rasa/cache/tmpg1a1wx16/unexpected_intent_policy.label_data.pkl
+rasa/.rasa/cache/tmpg1a1wx16/unexpected_intent_policy.label_quantiles.pkl
+rasa/.rasa/cache/tmpg1a1wx16/unexpected_intent_policy.meta.pkl
+rasa/.rasa/cache/tmpg1a1wx16/unexpected_intent_policy.priority.pkl
+rasa/.rasa/cache/tmpg1a1wx16/unexpected_intent_policy.tf_model.data-00000-of-00001
+rasa/.rasa/cache/tmpg1a1wx16/unexpected_intent_policy.tf_model.index
+rasa/.rasa/cache/tmplww9lqt8/checkpoint
+rasa/.rasa/cache/tmplww9lqt8/DIETClassifier.data_example.pkl
+rasa/.rasa/cache/tmplww9lqt8/DIETClassifier.label_data.pkl
+rasa/.rasa/cache/tmplww9lqt8/DIETClassifier.sparse_feature_sizes.pkl
+rasa/.rasa/cache/tmplww9lqt8/DIETClassifier.tf_model.data-00000-of-00001
+rasa/.rasa/cache/tmplww9lqt8/DIETClassifier.tf_model.index
+rasa/.rasa/cache/tmppz7i8mea/vocabularies.pkl
+rasa/.rasa/cache/tmps_hjp8y_/feature_to_idx_dict.pkl
+rasa/.rasa/cache/tmpsi82g6zl/vocabularies.pkl
+rasa/.rasa/cache/tmpsxf34lwy/feature_to_idx_dict.pkl
+rasa/.rasa/cache/tmpture2ffz/checkpoint
+rasa/.rasa/cache/tmpture2ffz/unexpected_intent_policy.data_example.pkl
+rasa/.rasa/cache/tmpture2ffz/unexpected_intent_policy.fake_features.pkl
+rasa/.rasa/cache/tmpture2ffz/unexpected_intent_policy.label_data.pkl
+rasa/.rasa/cache/tmpture2ffz/unexpected_intent_policy.label_quantiles.pkl
+rasa/.rasa/cache/tmpture2ffz/unexpected_intent_policy.meta.pkl
+rasa/.rasa/cache/tmpture2ffz/unexpected_intent_policy.priority.pkl
+rasa/.rasa/cache/tmpture2ffz/unexpected_intent_policy.tf_model.data-00000-of-00001
+rasa/.rasa/cache/tmpture2ffz/unexpected_intent_policy.tf_model.index
+rasa/.rasa/cache/tmpwyyi01nr/checkpoint
+rasa/.rasa/cache/tmpwyyi01nr/ted_policy.data_example.pkl
+rasa/.rasa/cache/tmpwyyi01nr/ted_policy.fake_features.pkl
+rasa/.rasa/cache/tmpwyyi01nr/ted_policy.label_data.pkl
+rasa/.rasa/cache/tmpwyyi01nr/ted_policy.meta.pkl
+rasa/.rasa/cache/tmpwyyi01nr/ted_policy.priority.pkl
+rasa/.rasa/cache/tmpwyyi01nr/ted_policy.tf_model.data-00000-of-00001
+rasa/.rasa/cache/tmpwyyi01nr/ted_policy.tf_model.index

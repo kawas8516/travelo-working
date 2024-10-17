@@ -1,0 +1,50 @@
+version: "3.1"
+
+stories:
+
+- story: happy path
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_great
+  - action: utter_happy
+
+- story: sad path 1
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_unhappy
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+  - intent: affirm
+  - action: utter_happy
+
+- story: sad path 2
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_unhappy
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+  - intent: deny
+  - action: utter_goodbye
+
+- story: cancel a ticket
+  steps:
+  - intent: cancel_ticket
+  - action: action_cancel_ticket
+  - action: utter_cancel_success
+
+- story: reschedule a ticket
+  steps:
+  - intent: reschedule_ticket
+  - action: action_reschedule_ticket
+  - action: utter_reschedule_success
+
+- story: book a ticket
+  steps:
+  - intent: book_ticket
+  - action: action_book_ticket
+  - action: utter_book_success
+
+
