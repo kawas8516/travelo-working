@@ -2,30 +2,90 @@ version: "3.1"
 
 rules:
 
-- rule: Say goodbye anytime the user says goodbye
-  steps:
-  - intent: goodbye
-  - action: utter_goodbye
+  # Rules for booking ticket story
+  - rule: Booking ticket process
+    steps:
+      - intent: book_ticket
+      - action: action_ask_museum
+      - action: action_listen
+      - action: action_ask_number_of_tickets
+      - action: action_listen
+      - action: action_ask_visit_date
+      - action: action_listen
+      - action: action_ask_ticket_type
+      - action: action_listen
+      - action: action_ask_payment
+      - action: action_listen
+      - action: action_confirm_booking
+      - action: utter_ask_museum  # Add this utterance
+      - action: utter_ask_number_of_tickets  # Add this utterance
+      - action: utter_ask_visit_date  # Add this utterance
+      - action: utter_ask_ticket_type  # Add this utterance
+      - action: utter_confirm_booking  # Add this utterance
 
-- rule: Say 'I am a bot' anytime the user challenges
-  steps:
-  - intent: bot_challenge
-  - action: utter_iamabot
+  - rule: Confirm booking
+    steps:
+      - intent: affirm
+      - action: action_confirm_booking
+  
+  - rule: Greet user
+    steps:
+      - intent: greet
+      - action: utter_greet
 
-- rule: Cancel a ticket
-  steps:
-    - intent: cancel_ticket
-    - action: action_cancel_ticket
-    - action: utter_cancel_success
+  - rule: Goodbye intent
+    steps:
+      - intent: goodbye
+      - action: utter_goodbye
 
-- rule: Reschedule a ticket
-  steps:
-    - intent: reschedule_ticket
-    - action: action_reschedule_ticket
-    - action: utter_reschedule_success
+  - rule: Payment query
+    steps:
+      - intent: ask_payment
+      - action: utter_ask_payment
 
-- rule: Book a ticket
-  steps:
-    - intent: book_ticket
-    - action: action_book_ticket
-    - action: utter_book_success
+  - rule: Inform intent handling
+    steps:
+      - intent: inform
+      - action: action_handle_inform
+
+  - rule: Cancel ticket process
+    steps:
+      - intent: cancel_ticket
+      - action: action_ask_ticket_id
+      - action: action_listen
+      - action: action_cancel_ticket
+      - action: utter_cancel_ticket
+
+  - rule: Reschedule ticket process
+    steps:
+      - intent: reschedule_ticket
+      - action: action_ask_ticket_id
+      - action: action_listen
+      - action: action_reschedule_ticket
+      - action: utter_reschedule_confirmation
+
+  - rule: Show museums list
+    steps:
+      - intent: show_museums
+      - action: action_show_museums
+      - action: utter_show_museums
+
+  - rule: Ask location
+    steps:
+      - intent: ask_location
+      - action: utter_ask_museum_location
+
+  - rule: Payment success
+    steps:
+      - intent: payment_success
+      - action: utter_payment_success
+
+  - rule: Thank user
+    steps:
+      - intent: thank_you
+      - action: utter_thank_you
+
+  - rule: Payment failure
+    steps:
+      - intent: payment_failure
+      - action: utter_payment_failed

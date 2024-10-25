@@ -40,3 +40,9 @@
 #  username: username
 #  password: password
 #  queue: queue
+action_endpoint:
+  url: "http://localhost:5055/webhook"
+
+
+# Server which runs your custom actions.
+# https://rasa.com/docs/rasa/custom-actions

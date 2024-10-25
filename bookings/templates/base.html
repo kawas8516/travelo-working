@@ -40,7 +40,7 @@
                 document.getElementById('userMessage').value = '';
 
                 // Send the message to the backend
-                fetch('http://localhost:5005/webhooks/rest/webhook', {
+                fetch('http://localhost:5055/webhooks/rest/webhook', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -77,6 +77,36 @@
         }
         return cookieValue;
     }
+    function displayMuseums(museums) {
+        // Assuming museums is an array of museum objects
+        let museumList = '';
+        museums.forEach(museum => {
+            museumList += `<p>${museum.name} - ${museum.city}, ${museum.state}</p>`;
+        });
+        document.getElementById("chat-messages").innerHTML += museumList;
+    }
+
+        // Assuming you have a function that handles Rasa bot responses
+    function handleBotResponse(response) {
+        if (response.action === 'action_show_museums') {
+            displayMuseums(response.museums);  // Display the museums
+        } else {
+                // Handle other bot responses
+        }
+    }
+        function displayMuseumsWithButtons(museums) {
+        let museumList = '';
+        museums.forEach(museum => {
+            museumList += `<button onclick="selectMuseum('${museum.name}')">${museum.name}</button>`;
+        });
+        document.getElementById("chat-messages").innerHTML += museumList;
+    }
+
+    function selectMuseum(museumName) {
+        // Send the selected museum back to the chatbot
+        sendMessageToBot(museumName);
+    }
+
     </script>
 </body>
 </html>

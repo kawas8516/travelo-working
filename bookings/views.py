@@ -1,213 +1,115 @@
-# from django.http import HttpResponse
-
-# def index(request):
-#     return HttpResponse("Welcome to the Ticket Booking App!")
-
-# Create your views here.
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
-import requests
-from .models import TicketInfo
-from datetime import datetime
 from django.http import JsonResponse
-from .models import TicketInfo, MuseumInfo
-from django.views.decorators.csrf import csrf_exempt
+from django.views import View
+from .models import MuseumInfo, TicketInfo
 import json
-from bookings.models import TicketInfo  # Ensure correct import path
 
-def index(request):
-    return HttpResponse("Welcome to the Ticket Booking App!")
+# Helper function to create JSON response
+def create_response(status, message, **kwargs):
+    response_data = {"status": status, "message": message}
+    response_data.update(kwargs)
+    return JsonResponse(response_data)
 
-def book_ticket(request):
-    if request.method == "POST":
-        # Extract data from the form
-        user_id = request.POST.get('user_id')
-        museum_id = request.POST.get('museum_id')
-        visit_date = request.POST.get('visit_date')
-        ticket_type = request.POST.get('ticket_type')
-        price = float(request.POST.get('price'))
-        number_of_tickets = int(request.POST.get('number_of_tickets'))
+class MuseumView(View):
+    def get_museum_info(self, museum_name):
+        try:
+            museum = MuseumInfo.objects.get(museum_name=museum_name)
+            return create_response('success', 'Museum info fetched successfully', museum_info={
+                'museum_id': museum.museum_id,
+                'museum_name': museum.museum_name,
+                'museum_type': museum.museum_type,
+                'address': museum.street_address,
+                'city': museum.city,
+                'state': museum.state,
+                'phone': museum.phone_number,
+                'latitude': museum.latitude,
+                'longitude': museum.longitude,
+            })
+        except MuseumInfo.DoesNotExist:
+            return create_response('error', 'Museum not found')
 
-        # Create a new TicketInfo object
-        ticket = TicketInfo(
+    def post(self, request):
+        data = json.loads(request.body)
+        museum_name = data.get("museum_name")
+        return self.get_museum_info(museum_name)
+
+class TicketBookingView(View):
+    def book_ticket(self, user_id, museum_id, visit_date, number_of_tickets, ticket_type, price):
+        ticket_info = TicketInfo(
             user_id=user_id,
             museum_id=museum_id,
-            booking_date=datetime.now(),
             visit_date=visit_date,
+            number_of_tickets=number_of_tickets,
             ticket_type=ticket_type,
             price=price,
-            number_of_tickets=number_of_tickets,
-            total_amount=price * number_of_tickets,
-            payment_status="Pending",
-            booking_status="Confirmed"  # or other initial status
         )
-        ticket.save()
-        return redirect('booking_success')  # Redirect to a success page
+        ticket_info.save()
+        return create_response('success', 'Ticket booked successfully', ticket_id=ticket_info.ticket_id)
 
-    return render(request, 'bookings/book_ticket.html')
-
-def cancel_ticket(request):
-    if request.method == 'POST':
-        ticket_id = request.POST.get('ticket_id')
-        try:
-            ticket = TicketInfo.objects.get(ticket_id=ticket_id)
-            ticket.booking_status = 'Cancelled'
-            ticket.save()
-            return JsonResponse({'message': 'Ticket cancelled successfully.'})
-        except TicketInfo.DoesNotExist:
-            return JsonResponse({'error': 'Ticket not found.'}, status=404)
-
-    return JsonResponse({'error': 'Invalid request method.'}, status=405)
-
-
-def reschedule_ticket(request):
-    if request.method == 'POST':
-        ticket_id = request.POST.get('ticket_id')
-        new_visit_date = request.POST.get('new_visit_date')
-        try:
-            ticket = TicketInfo.objects.get(ticket_id=ticket_id)
-            ticket.visit_date = new_visit_date
-            ticket.save()
-            return JsonResponse({'message': 'Ticket rescheduled successfully.'})
-        except TicketInfo.DoesNotExist:
-            return JsonResponse({'error': 'Ticket not found.'}, status=404)
-
-    return JsonResponse({'error': 'Invalid request method.'}, status=405)
-
-@csrf_exempt
-def book_ticket(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            museum_id = data.get('museum_id')
-            visit_date = data.get('visit_date')
-            ticket_type = data.get('ticket_type')
-            number_of_tickets = int(data.get('number_of_tickets'))
-            price_per_ticket = float(data.get('price'))
-
-            total_amount = number_of_tickets * price_per_ticket
-
-            # Create a new ticket entry
-            ticket = TicketInfo.objects.create(
-                user_id=data.get('user_id'),
-                museum_id=museum_id,
-                booking_date=datetime.now(),
-                visit_date=datetime.strptime(visit_date, '%Y-%m-%d'),
-                ticket_type=ticket_type,
-                number_of_tickets=number_of_tickets,
-                total_amount=total_amount,
-                price=price_per_ticket,
-                payment_status='Pending',
-                booking_status='Confirmed'
-            )
-
-            return JsonResponse({'status': 'success', 'ticket_id': ticket.ticket_id})
-        except Exception as e:
-            return JsonResponse({'status': 'error', 'message': str(e)})
-    else:
-        return HttpResponse(status=405)
-
-@csrf_exempt
-def cancel_ticket(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            ticket_id = data.get('ticket_id')
-
-            # Find the ticket and cancel it
-            ticket = TicketInfo.objects.get(ticket_id=ticket_id)
-            ticket.booking_status = 'Cancelled'
-            ticket.save()
-
-            return JsonResponse({'status': 'success', 'message': 'Ticket cancelled successfully'})
-        except TicketInfo.DoesNotExist:
-            return JsonResponse({'status': 'error', 'message': 'Ticket not found'})
-        except Exception as e:
-            return JsonResponse({'status': 'error', 'message': str(e)})
-    else:
-        return HttpResponse(status=405)
-
-@csrf_exempt
-def reschedule_ticket(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            ticket_id = data.get('ticket_id')
-            new_visit_date = data.get('new_visit_date')
-
-            # Find the ticket and reschedule it
-            ticket = TicketInfo.objects.get(ticket_id=ticket_id)
-            ticket.visit_date = datetime.strptime(new_visit_date, '%Y-%m-%d')
-            ticket.booking_status = 'Rescheduled'
-            ticket.save()
-
-            return JsonResponse({'status': 'success', 'message': 'Ticket rescheduled successfully'})
-        except TicketInfo.DoesNotExist:
-            return JsonResponse({'status': 'error', 'message': 'Ticket not found'})
-        except Exception as e:
-            return JsonResponse({'status': 'error', 'message': str(e)})
-    else:
-        return HttpResponse(status=405)
-    
-from rest_framework import status
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from .models import TicketInfo
-from .serializers import TicketInfoSerializer
-
-@api_view(['POST'])
-def book_ticket(request):
-    if request.method == 'POST':
-        serializer = TicketInfoSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-@api_view(['DELETE'])
-def cancel_ticket(request, ticket_id):
-    try:
-        ticket = TicketInfo.objects.get(id=ticket_id)
-    except TicketInfo.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-    if request.method == 'DELETE':
-        ticket.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-# Add additional views for rescheduling and payment processing
-
-
-from django.http import JsonResponse
-
-def chatbot_response(request):
-    if request.method == 'POST':
+    def post(self, request):
         data = json.loads(request.body)
-        user_message = data.get('message')
+        user_id = data.get("user_id", "some_user_id")  # Replace with actual user ID logic
+        museum_id = data.get("museum_id")
+        visit_date = data.get("visit_date")
+        number_of_tickets = data.get("number_of_tickets")
+        ticket_type = data.get("ticket_type", "adult")  # Default to adult ticket
+        price = data.get("price", 0)  # Assuming price is passed in the request
+        return self.book_ticket(user_id, museum_id, visit_date, number_of_tickets, ticket_type, price)
 
-        # Call the Rasa server to get the chatbot response
-        bot_response = process_message(user_message)
+class TicketCancellationView(View):
+    def cancel_ticket(self, ticket_id):
+        try:
+            ticket_info = TicketInfo.objects.get(ticket_id=ticket_id)
+            ticket_info.delete()
+            return create_response('success', 'Ticket cancelled successfully')
+        except TicketInfo.DoesNotExist:
+            return create_response('error', 'Ticket not found')
 
-        return JsonResponse({'message': bot_response})
-    return JsonResponse({'error': 'Invalid request'}, status=400)
+    def post(self, request):
+        data = json.loads(request.body)
+        ticket_id = data.get("ticket_id")
+        return self.cancel_ticket(ticket_id)
 
-def process_message(user_message):
-    url = "http://localhost:5005/webhooks/rest/webhook"  # Rasa's REST webhook
-    
+class TicketReschedulingView(View):
+    def reschedule_ticket(self, ticket_id, new_visit_date):
+        try:
+            ticket_info = TicketInfo.objects.get(ticket_id=ticket_id)
+            ticket_info.visit_date = new_visit_date
+            ticket_info.save()
+            return create_response('success', 'Ticket rescheduled successfully')
+        except TicketInfo.DoesNotExist:
+            return create_response('error', 'Ticket not found')
 
-    payload = {
-        "sender": "user",  # Identifier for the user
-        "message": user_message
-    }
+    def post(self, request):
+        data = json.loads(request.body)
+        ticket_id = data.get("ticket_id")
+        new_visit_date = data.get("new_visit_date")
+        return self.reschedule_ticket(ticket_id, new_visit_date)
 
-    response = requests.post(url=url, json=payload)
+class TicketInfoView(View):
+    def get_ticket_info(self, ticket_id):
+        try:
+            ticket = TicketInfo.objects.get(ticket_id=ticket_id)
+            ticket_info = {
+                "ticket_id": ticket.ticket_id,
+                "museum_name": ticket.museum_name,
+                "visit_date": ticket.visit_date,
+                "number_of_tickets": ticket.number_of_tickets,
+            }
+            return create_response('success', 'Ticket info fetched successfully', ticket=ticket_info)
+        except TicketInfo.DoesNotExist:
+            return create_response('error', 'Ticket not found.')
 
-    if response.status_code == 200:
-        response_data = response.json()
-        if response_data:  # Check if there's a response
-            bot_reply = response_data[0].get('text', 'I didn’t understand that.')
-            return bot_reply
-        else:
-            return "Sorry, I didn't understand that."
-    else:
-        return "Error: Unable to connect to the chatbot service."
+    def get(self, request):
+        ticket_id = request.GET.get('ticket_id')
+        return self.get_ticket_info(ticket_id)
+
+# URLs mapping
+from django.urls import path
+
+urlpatterns = [
+    path('get_museum_info/', MuseumView.as_view(), name='get_museum_info'),
+    path('book_ticket/', TicketBookingView.as_view(), name='book_ticket'),
+    path('cancel_ticket/', TicketCancellationView.as_view(), name='cancel_ticket'),
+    path('reschedule_ticket/', TicketReschedulingView.as_view(), name='reschedule_ticket'),
+    path('get_ticket_info/', TicketInfoView.as_view(), name='get_ticket_info'),
+]

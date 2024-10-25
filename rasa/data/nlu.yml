@@ -3,122 +3,100 @@ version: "3.1"
 nlu:
   - intent: greet
     examples: |
-      - hey
-      - hello
-      - hi
+      - Hello
+      - Hi
+      - Hey
+      - Good morning
+      - Good afternoon
 
-  - intent: goodbye
+  - intent: book_ticket
     examples: |
-      - bye
-      - goodbye
+      - I want to book a ticket
+      - Book a ticket for me
+      - I need tickets to a museum
+      - Can you help me book a museum ticket?
+
+  - intent: cancel_ticket
+    examples: |
+      - I want to cancel my ticket
+      - Can I cancel my ticket?
+      - Cancel my booking
+      - I need to cancel my ticket
 
   - intent: affirm
     examples: |
       - yes
       - indeed
-      - certainly
-
-  - intent: deny
+      - of course
+      - that sounds good
+      - correct
+   
+  - intent: ask_location
     examples: |
-      - no
-      - never
-      - not at all
+      - Where is the museum?
+      - Can you tell me the location?
+      - What is the address of the museum?
+      - How do I get to the museum?
 
-  - intent: mood_great
+  - intent: ask_payment
     examples: |
-      - I am feeling great
-      - I feel awesome
-      - I am doing well
+      - How do I make a payment?
+      - What payment methods are accepted?
+      - Can I pay with cash?
+      - Is there a fee for payment?
 
-  - intent: mood_unhappy
+  - intent: goodbye
     examples: |
-      - I am sad
-      - I am feeling down
-      - I am unhappy
+      - Goodbye
+      - See you later
+      - Bye
+      - Have a nice day
 
-  - intent: bot_challenge
+  - intent: inform
     examples: |
-      - Are you a bot?
-      - What are you?
-      - Can you tell me about yourself?
+      - I would like to inform you that...
+      - Just to let you know...
+      - I want to share that...
+      - Please note that...
 
-  - intent: book_ticket
+  - intent: inquire_ticket_price
     examples: |
-      - I want to book a ticket
-      - Can you help me book a ticket?
-      - I need to book a ticket
-      - Help me book a ticket for the museum
-      - Can I book a ticket?
-      - I need a ticket
+      - How much is a ticket?
+      - What is the price of admission?
+      - Can you tell me the ticket price?
+      - How much do tickets cost?
 
-  - intent: cancel_ticket
+  - intent: payment_failure
     examples: |
-      - I want to cancel my ticket
-      - Can you cancel my ticket?
-      - I need to cancel my reservation
+      - My payment did not go through.
+      - I encountered an error while paying.
+      - The payment failed.
+      - I wasn't able to complete my payment.
+
+  - intent: payment_success
+    examples: |
+      - My payment was successful.
+      - I have completed the payment.
+      - The payment went through.
+      - I received confirmation of my payment.
 
   - intent: reschedule_ticket
     examples: |
-      - I want to reschedule my ticket
-      - Can you help me change my booking?
-      - I need to change my visit date
+      - I need to reschedule my ticket.
+      - Can I change my booking date?
+      - I want to modify my ticket reservation.
+      - Please help me reschedule my ticket.
 
-responses:
-  utter_greet:
-    - text: "Hey! How are you?"
+  - intent: show_museums
+    examples: |
+      - What museums are available?
+      - Can you show me a list of museums?
+      - Which museums can I visit?
+      - Tell me about the museums in the area.
 
-  utter_cheer_up:
-    - text: "Here is something to cheer you up:"
-      image: "https://i.imgur.com/nGF1K8f.jpg"
-
-  utter_did_that_help:
-    - text: "Did that help you?"
-
-  utter_happy:
-    - text: "Great, carry on!"
-
-  utter_goodbye:
-    - text: "Bye"
-
-  utter_iamabot:
-    - text: "I am a bot, powered by Rasa."
-
-  utter_cancel_success:
-    - text: "Your ticket has been canceled."
-
-  utter_reschedule_success:
-    - text: "Your ticket has been rescheduled."
-
-session_config:
-  session_expiration_time: 60
-  carry_over_slots_to_new_session: true
-
-slots:
-  museum:
-    type: text
-    mappings:
-      - type: from_entity
-        entity: museum_name
-  date:
-    type: text
-    mappings:
-      - type: from_entity
-        entity: visit_date
-  ticket_id:
-    type: text
-    mappings:
-      - type: from_entity
-        entity: ticket_id
-
-entities:
-  - museum_name
-  - visit_date
-  - ticket_id
-  - museum_name
-  - num_people
-
-
-actions:
-  - action_cancel_ticket
-  - action_reschedule_ticket
-  - action_book_ticket
+  - intent: thank_you
+    examples: |
+      - Thank you!
+      - I appreciate your help.
+      - Thanks for your assistance.
+      - I'm grateful for your support.

@@ -1,50 +1,79 @@
 version: "3.1"
 
 stories:
+  - story: Book a ticket
+    steps:
+      - intent: book_ticket
+      - action: action_ask_museum
+      - action: action_listen
+      - action: action_ask_number_of_tickets
+      - action: action_listen
+      - action: action_ask_visit_date
+      - action: action_listen
+      - action: action_ask_ticket_type
+      - action: action_listen
+      - action: action_ask_payment
+      - action: action_listen
+      - action: action_confirm_booking
+      - action: utter_ask_museum  # Add this utterance
+      - action: utter_ask_number_of_tickets  # Add this utterance
+      - action: utter_ask_visit_date  # Add this utterance
+      - action: utter_ask_ticket_type  # Add this utterance
+      - action: utter_confirm_booking  # Add this utterance
 
-- story: happy path
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_great
-  - action: utter_happy
+  - story: User says goodbye
+    steps:
+      - intent: goodbye
+      - action: utter_goodbye
 
-- story: sad path 1
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: affirm
-  - action: utter_happy
+  - story: Ask for payment
+    steps:
+      - intent: ask_payment
+      - action: utter_ask_payment
 
-- story: sad path 2
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: deny
-  - action: utter_goodbye
+  - story: Cancel a ticket
+    steps:
+      - intent: cancel_ticket
+      - action: action_ask_ticket_id
+      - action: action_listen
+      - action: action_cancel_ticket
+      - action: utter_cancel_ticket
 
-- story: cancel a ticket
-  steps:
-  - intent: cancel_ticket
-  - action: action_cancel_ticket
-  - action: utter_cancel_success
+  - story: Reschedule a ticket
+    steps:
+      - intent: reschedule_ticket
+      - action: action_ask_ticket_id
+      - action: action_listen
+      - action: action_reschedule_ticket
+      - action: utter_reschedule_confirmation
 
-- story: reschedule a ticket
-  steps:
-  - intent: reschedule_ticket
-  - action: action_reschedule_ticket
-  - action: utter_reschedule_success
+  - story: Inquire about ticket price
+    steps:
+      - intent: inquire_ticket_price
+      - action: utter_ticket_price
 
-- story: book a ticket
-  steps:
-  - intent: book_ticket
-  - action: action_book_ticket
-  - action: utter_book_success
+  - story: Show museums list
+    steps:
+      - intent: show_museums
+      - action: action_show_museums
+      - action: utter_show_museums
 
+  - story: Ask for location
+    steps:
+      - intent: ask_location
+      - action: utter_ask_museum_location
 
+  - story: Thank user
+    steps:
+      - intent: thank_you
+      - action: utter_thank_you
+
+  - story: Payment success
+    steps:
+      - intent: payment_success
+      - action: utter_payment_success
+
+  - story: Payment failure
+    steps:
+      - intent: payment_failure
+      - action: utter_payment_failed

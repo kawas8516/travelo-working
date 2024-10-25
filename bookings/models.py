@@ -25,7 +25,10 @@ class MuseumInfo(Document):
 class TicketInfo(Document):
     ticket_id = StringField(required=True, unique=True)
     user_id = StringField(required=True)  # You may want to link this to a User model
+    
+    # You want to link this to a MuseumInfo model
     museum_id = StringField(required=True)
+    
     booking_date = DateTimeField()
     visit_date = DateTimeField()
     ticket_type = StringField()
