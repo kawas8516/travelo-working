@@ -90,4 +90,4 @@ rasa shell
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ### Contact
-For any issues, feel free to reach out at **your-email@example.com**.
+For any issues, feel free to reach out at **kaustubhamandhane24@gmail.com**.
